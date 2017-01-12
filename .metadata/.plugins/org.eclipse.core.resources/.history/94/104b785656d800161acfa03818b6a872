@@ -1,0 +1,42 @@
+package tetris;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class cubeFrame extends JFrame {
+	// constructor
+	public cubeFrame(){
+		// size close location panel
+		setSize(350,500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);// null means in the middle
+		cubePanel panel = new cubePanel();
+		add(panel);
+	}
+	// main fuction
+	public static void main(String[] args){
+		cubeFrame frame=new cubeFrame();
+		frame.setVisible(true);
+		
+	}
+	//inner class panel
+	private class cubePanel extends JPanel{
+		public void paint(Graphics g){
+			// background color
+			g.setColor(Color.WHITE);
+			//                     r g b
+			//g.setColor(new Color(0x000000));// use number represent color
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.setColor(new Color(0xffff00));
+			// draw the shade of the cube
+			g.fillRoundRect(0, 0, 30, 30, 8, 8);
+			g.setColor(Color.RED);
+			g.drawRoundRect(0, 0, 30, 30, 8, 8);
+			
+		}
+		
+	}
+}

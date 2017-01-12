@@ -1,0 +1,14 @@
+package tetris;
+
+public class test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		T t =  new T();
+		printT(t);
+	}
+	public static void printT(T t ){
+		
+	}
+
+}

@@ -1,0 +1,10 @@
+
+.recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/org/eclipse/recommenders/index/0.0.0-SNAPSHOT/resolver-status.properties
+
+*.xml
+
+.metadata/.mylyn/.tasks.xml.zip
+
+.metadata/.mylyn/tasks.xml.zip
+
+.metadata/.plugins/org.eclipse.core.resources/.history/bc/9074bdf5c0d500161acfa03818b6a872
