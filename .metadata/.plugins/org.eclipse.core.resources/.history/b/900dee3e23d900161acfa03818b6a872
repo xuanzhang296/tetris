@@ -1,0 +1,55 @@
+package tetris;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+
+public class Tetris extends JPanel {
+	public static final int ROWS = 20;
+	public static final int COLS = 20;
+	private int score;
+	private int lines;
+	private Cell[][] wall = new Cell [ROWS][COLS];
+	private Tetromino tetromino;
+	private Tetromino nextOne;
+	private static BufferedImage background;
+	public static BufferedImage T;
+	public static BufferedImage S;
+	public static BufferedImage Z;
+	public static BufferedImage O;
+	public static BufferedImage J;
+	public static BufferedImage L;
+	public static BufferedImage I;
+	static{
+		try{
+			background = ImageIO.read(Tetris.class.getResource("tetris.png"));
+			T = ImageIO.read(T.class.getResource("T.png"));
+			J = ImageIO.read(T.class.getResource("J.png"));
+			S = ImageIO.read(T.class.getResource("S.png"));
+			Z = ImageIO.read(T.class.getResource("Z.png"));
+			O = ImageIO.read(T.class.getResource("O.png"));
+			L = ImageIO.read(T.class.getResource("L.png"));
+			I = ImageIO.read(T.class.getResource("I.png"));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	public void paint(Graphics g){
+		g.drawImage(background, 0, 0, null);
+	}
+	/*public static void main(String[] args){
+		JFrame frame = new JFrame();
+		Tetris tetris = new Tetris();		
+		frame.add(tetris);
+		frame.setSize(530, 580);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		tetris.setBackground(new Color(0x0000ff));
+		
+	}*/
+}

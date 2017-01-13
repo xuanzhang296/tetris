@@ -1,0 +1,16 @@
+package tetris;
+
+import javax.swing.JFrame;
+
+public class GameFrame extends JFrame{
+	private Tetris tetris;
+	public GameFrame(){
+		tetris = new Tetris();
+		add(tetris);
+		setSize(530, 580);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+}

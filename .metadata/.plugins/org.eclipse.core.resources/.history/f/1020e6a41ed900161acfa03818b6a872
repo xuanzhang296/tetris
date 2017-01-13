@@ -1,0 +1,28 @@
+package tetris;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+
+public class Tetris extends JPanel {
+	public static final int ROWS = 20;
+	public static final int COLS = 20;
+	private int score;
+	private int lines;
+	private Cell[][] wall = new Cell [ROWS][COLS];
+	private Tetromino tetromino;
+	private Tetromino nextOne;
+	public static void main(String[] args){
+		JFrame frame = new JFrame();
+		Tetris tetris = new Tetris();		
+		frame.add(tetris);
+		frame.setSize(530, 580);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		tetris.setBackground(new Color(0x0000ff));
+		
+	}
+
+}

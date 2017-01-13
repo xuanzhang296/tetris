@@ -1,14 +1,37 @@
 package tetris;
 
+import java.awt.image.BufferedImage;
+
 public class Cell {
 	int row;
 	int col;
-	public Cell(int row,int col){
+	private BufferedImage image;
+	public Cell(int row,int col,BufferedImage image){
 		this.row = row;
 		this.col = col;
+		this.image = image;
 	}
 	public Cell(){
-		this(0, 0);
+		this(0, 0,null);
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	public void setRow(int row) {
+		this.row = row;
+	}
+	public int getCol() {
+		return col;
+	}
+	public void setCol(int col) {
+		this.col = col;
+	}
+	public BufferedImage getImage() {
+		return image;
+	}
+	public void setImage(BufferedImage image) {
+		this.image = image;
 	}
 	public void drop(){
 		row++;
@@ -28,10 +51,12 @@ public class Cell {
 	public void moveRight(){
 		col++;
 	}
-	public String toString(){
-		String a = "("+this.row+","+this.col+")";
-		return a;
+	@Override
+	public String toString() {
+		return "Cell [row=" + row + ", col=" + col + ", image=" + image + "]";
 	}
+	
+	
 	
 	
 

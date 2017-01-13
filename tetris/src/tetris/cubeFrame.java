@@ -50,7 +50,7 @@ public class cubeFrame extends JFrame {
 			}
 		};
 		//step2
-		panel.addKeyListener(l);// register listner
+		panel.addKeyListener(l);// register listener
 		panel.setFocusable(true);//panel can get focus
 		panel.requestFocus();//request focus
 		Timer timer = new Timer();
@@ -63,7 +63,7 @@ public class cubeFrame extends JFrame {
 		timer.schedule(dropTask, 1000, 500);
 		
 	}
-	// main fuction
+	// main function
 	public static void main(String[] args){
 		cubeFrame frame=new cubeFrame();
 		frame.setVisible(true);
