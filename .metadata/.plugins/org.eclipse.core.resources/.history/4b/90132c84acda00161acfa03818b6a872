@@ -3,7 +3,6 @@ package tetris;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -21,20 +20,11 @@ public class Tetris extends JPanel {
 	private int score;
 	private int lines;
 	private int level;
-	private int index;
-	private int speed;
-	private Timer timer;
-	private int state;
-	public static final int RUNNING = 0;
-	public static final int PAUSE =1;
-	public static final int GAME_OVER =2;
 	private Cell[][] wall = new Cell [ROWS][COLS];
 	private Tetromino tetromino;
 	private Tetromino nextOne;
 	private static BufferedImage background;
 	private static BufferedImage overImage;
-	private static BufferedImage gameOver;
-	private static BufferedImage pause;
 	public static BufferedImage T;
 	public static BufferedImage S;
 	public static BufferedImage Z;
@@ -45,8 +35,6 @@ public class Tetris extends JPanel {
 	static{
 		try{
 			background = ImageIO.read(Tetris.class.getResource("tetris.png"));
-			gameOver = ImageIO.read(Tetris.class.getResource("gameOver.png"));
-			pause = ImageIO.read(Tetris.class.getResource("pause.png"));
 			T = ImageIO.read(T.class.getResource("T.png"));
 			J = ImageIO.read(T.class.getResource("J.png"));
 			S = ImageIO.read(T.class.getResource("S.png"));
@@ -65,7 +53,6 @@ public class Tetris extends JPanel {
 		paintTetromino(g);
 		paintNextOne(g);
 		paintScore(g);
-		paintState(g);
 	}
 	/*public static void main(String[] args){
 		JFrame frame = new JFrame();
@@ -95,29 +82,6 @@ public class Tetris extends JPanel {
 			}
 		}
 	}
-	public void paintTetromino(Graphics g){
-		if(tetromino == null){
-			return;
-		}
-		Cell[] cells = tetromino.cells;
-		for(int i = 0; i < cells.length; i++){
-			Cell cell = cells[i];
-			int x = cell.getCol()*CELL_SIZE;
-			int y = cell.getRow()*CELL_SIZE;
-			g.drawImage(cell.getImage(), x-1, y-1, null);
-		}
-	}
-	public void paintNextOne(Graphics g){
-		if(nextOne == null){return;}
-		Cell[] cells = nextOne.cells;
-		for(int i = 0; i < cells.length; i++){
-			 Cell cell = cells[i];
-			 int x= (cell.getCol()+13)*CELL_SIZE;
-			 int y= (cell.getRow()+1)*CELL_SIZE;
-			 g.drawImage(cell.getImage(), x-1, y-1, null);
-			 
-		}
-	}
 	private void paintScore(Graphics g) {
 		int x = 292;
 		int y = 162;
@@ -138,16 +102,6 @@ public class Tetris extends JPanel {
 		y += 56;
 		g.drawString("LEVEL:" + level, x, y);
 	}
-	private void paintState(Graphics g) {
-		switch (state) {
-		case PAUSE:
-			g.drawImage(pause, -15, -15, null);
-			break;
-		case GAME_OVER:
-			g.drawImage(gameOver, -15, -15, null);
-			break;
-		}
-	}
 
 	public void action(){
 		wall [18][0] = new Cell(18,0,Tetris.L);
@@ -156,10 +110,8 @@ public class Tetris extends JPanel {
 		wall [19][2] = new Cell(19,2,Tetris.L);
 		tetromino = Tetromino.randomOne();
 		nextOne = Tetromino.randomOne();
-		state = RUNNING;
-		repaint();
 		//key listener step1:
-		/*		KeyListener l = new KeyListener(){
+				KeyListener l = new KeyListener(){
 					public void keyPressed(KeyEvent e){
 						//System.out.println("press:" + e.getKeyCode());
 						//cubex+=30;
@@ -178,9 +130,6 @@ public class Tetris extends JPanel {
 						case KeyEvent.VK_SPACE:
 							hardDropAction();
 							break;
-						case KeyEvent.VK_UP:
-							rotateRightAction();
-							break;
 						}
 						repaint();
 					}
@@ -191,99 +140,23 @@ public class Tetris extends JPanel {
 						
 					}
 				};
-				*/
-		this.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int key = e.getKeyCode();
-				switch (state) {
-				case GAME_OVER:
-					processGameoverKey(key);
-					break;
-				case PAUSE:
-					processPauseKey(key);
-					break;
-				case RUNNING:
-					processRunningKey(key);
-				}
-				repaint();
-			}
-		});
 				//step2
+				addKeyListener(l);// register listener
 				setFocusable(true);//panel can get focus
 				requestFocus();//request focus
-				
-				timer = new Timer();
-				timer.schedule(new TimerTask(){
-					public void run() {
-						speed = 40 - (lines / 100);
-						speed = speed < 1 ? 1 : speed;
-						level = 41 - speed;
-						if (state == RUNNING && index % speed == 0) {
-							softDropAction();
-						}
-						index++;
-						repaint();
-					}
-				},10,10);
 	}
-	private void processPauseKey(int key) {
-		switch (key) {
-		case KeyEvent.VK_Q:
-			System.exit(0);
-			break;
-		case KeyEvent.VK_C:
-			this.index = 0;
-			state = RUNNING;
-			break;
+	public void paintTetromino(Graphics g){
+		if(tetromino == null){
+			return;
+		}
+		Cell[] cells = tetromino.cells;
+		for(int i = 0; i < cells.length; i++){
+			Cell cell = cells[i];
+			int x = cell.getCol()*CELL_SIZE;
+			int y = cell.getRow()*CELL_SIZE;
+			g.drawImage(cell.getImage(), x-1, y-1, null);
 		}
 	}
-
-	protected void processRunningKey(int key) {
-		switch (key) {
-		case KeyEvent.VK_Q:
-			System.exit(0);
-			break;
-		case KeyEvent.VK_RIGHT:
-			Tetris.this.moveRightAction();
-			break;
-		case KeyEvent.VK_LEFT:
-			Tetris.this.moveLeftAction();
-			break;
-		case KeyEvent.VK_DOWN:
-			softDropAction();
-			break;
-		case KeyEvent.VK_SPACE:
-			hardDropAction();
-			break;
-		case KeyEvent.VK_UP:
-			rotateRightAction();
-			break;
-		case KeyEvent.VK_P:
-			state = PAUSE;
-			break;
-		}
-
-	}
-
-	protected void processGameoverKey(int key) {
-		switch (key) {
-		case KeyEvent.VK_Q:
-			System.exit(0);
-			break;
-		case KeyEvent.VK_S:
-			this.lines = 0;
-			this.score = 0;
-			this.wall = new Cell[ROWS][COLS];
-			this.tetromino = Tetromino.randomOne();
-			this.nextOne = Tetromino.randomOne();
-			this.state = RUNNING;
-			this.index = 0;
-			break;
-		}
-	}
-
-
 	public boolean outOfBound(){
 		Cell[] cells = tetromino.cells;
 		for(int i = 0; i < cells.length;i++){
@@ -295,7 +168,17 @@ public class Tetris extends JPanel {
 		}
 		return false;
 	}
-	
+	public void paintNextOne(Graphics g){
+		if(nextOne == null){return;}
+		Cell[] cells = nextOne.cells;
+		for(int i = 0; i < cells.length; i++){
+			 Cell cell = cells[i];
+			 int x= (cell.getCol()+13)*CELL_SIZE;
+			 int y= (cell.getRow()+1)*CELL_SIZE;
+			 g.drawImage(cell.getImage(), x-1, y-1, null);
+			 
+		}
+	}
 	private boolean coincide() {
 		Cell[] cells = tetromino.cells;
 		for (int i = 0; i < cells.length; i++) {
@@ -406,24 +289,6 @@ public class Tetris extends JPanel {
 			tetromino = nextOne;
 			nextOne = Tetromino.randomOne();
 		}
-	}
-	private void rotateRightAction() {
-		tetromino.rotateRight();
-		if (outOfBound() || coincide()) {
-			tetromino.rotateLeft();
-		}
-		
-	}
-	private boolean isGameOver() {
-		Cell[] cells = nextOne.cells;
-		for (Cell cell : cells) {
-			int row = cell.getRow();
-			int col = cell.getCol();
-			if (wall[row][col] != null) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	

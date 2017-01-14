@@ -22,7 +22,6 @@ public class Tetris extends JPanel {
 	private int lines;
 	private int level;
 	private int index;
-	private int speed;
 	private Timer timer;
 	private int state;
 	public static final int RUNNING = 0;
@@ -157,7 +156,6 @@ public class Tetris extends JPanel {
 		tetromino = Tetromino.randomOne();
 		nextOne = Tetromino.randomOne();
 		state = RUNNING;
-		repaint();
 		//key listener step1:
 		/*		KeyListener l = new KeyListener(){
 					public void keyPressed(KeyEvent e){
@@ -194,6 +192,7 @@ public class Tetris extends JPanel {
 				*/
 		this.addKeyListener(new KeyAdapter() {
 			@Override
+			// Java 5 Ã·π©, ºÏ≤È∫Û–¯ «∑Ò «÷ÿ–¥
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
 				switch (state) {
@@ -215,14 +214,8 @@ public class Tetris extends JPanel {
 				
 				timer = new Timer();
 				timer.schedule(new TimerTask(){
-					public void run() {
-						speed = 40 - (lines / 100);
-						speed = speed < 1 ? 1 : speed;
-						level = 41 - speed;
-						if (state == RUNNING && index % speed == 0) {
-							softDropAction();
-						}
-						index++;
+					public void run(){
+						softDropAction();
 						repaint();
 					}
 				},10,10);
@@ -408,6 +401,7 @@ public class Tetris extends JPanel {
 		}
 	}
 	private void rotateRightAction() {
+		// TODO Auto-generated method stub
 		tetromino.rotateRight();
 		if (outOfBound() || coincide()) {
 			tetromino.rotateLeft();

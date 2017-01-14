@@ -45,8 +45,8 @@ public class Tetris extends JPanel {
 	static{
 		try{
 			background = ImageIO.read(Tetris.class.getResource("tetris.png"));
-			gameOver = ImageIO.read(Tetris.class.getResource("gameOver.png"));
-			pause = ImageIO.read(Tetris.class.getResource("pause.png"));
+			//gameOver = ImageIO.read(Tetris.class.getResource("gameOver.png"));
+			//pause = ImageIO.read(Tetris.class.getResource("pause.png"));
 			T = ImageIO.read(T.class.getResource("T.png"));
 			J = ImageIO.read(T.class.getResource("J.png"));
 			S = ImageIO.read(T.class.getResource("S.png"));
