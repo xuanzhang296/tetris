@@ -4,24 +4,25 @@ public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		T t =  new T();
+		T t = new T();
 		printT(t);
 		t.print();
 	}
-	public static void printT(T t ){
-		int totalRow =20;
-		int totalCol =10;
+
+	public static void printT(T t) {
+		int totalRow = 20;
+		int totalCol = 10;
 		Cell[] cells = t.cells;
-		for(int row = 0;row < totalRow;row++){
-			for(int col = 0;col < totalCol;col++){
+		for (int row = 0; row < totalRow; row++) {
+			for (int col = 0; col < totalCol; col++) {
 				boolean flag = true;
-				for(int i = 0;i < cells.length;i++){
-					if(cells[i].row == row && cells[i].col == col){
+				for (int i = 0; i < cells.length; i++) {
+					if (cells[i].row == row && cells[i].col == col) {
 						System.out.print("* ");
 						flag = false;
-					}					
+					}
 				}
-				if(flag){
+				if (flag) {
 					System.out.print("- ");
 				}
 			}

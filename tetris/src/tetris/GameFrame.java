@@ -2,9 +2,10 @@ package tetris;
 
 import javax.swing.JFrame;
 
-public class GameFrame extends JFrame{
+public class GameFrame extends JFrame {
 	private Tetris tetris;
-	public GameFrame(){
+
+	public GameFrame() {
 		tetris = new Tetris();
 		add(tetris);
 		setSize(530, 580);
@@ -12,11 +13,12 @@ public class GameFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		tetris.action();
-		
+
 	}
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		GameFrame frame = new GameFrame();
 		frame.setVisible(true);
 	}
-	
+
 }
